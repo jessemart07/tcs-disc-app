@@ -1,124 +1,124 @@
 const initialState = {
-    count:1,
+    count:24,
     question:{
         answer1:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:4,
             question:["Gentle", "Persuasive", "Humble", "Original"]
         },
         answer2:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:1,
             question:["Charming", "Co-operative", "Stubborn", "Sweet"]
         },
         answer3:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:4,
+            leastValue:4,
             question:["Easily led", "Bold", "Loyal", "Charming"]
         },
         answer4:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:1,
             question:["Open-minded", "Helpful", "Strong-willed", "Cheerful"]
         },
         answer5:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:1,
             question:["Jovial", "Precise", "Gutsy", "Calm"]
         },
         answer6:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:2,
+            leastValue:4,
             question:["Competitive", "Considerate", "Outgoing", "Agreeable"]
         },
         answer7:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:3,
+            leastValue:3,
             question:["Fussy", "Obedient", "Determined", "Playful"]
         },
         answer8:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:3,
+            leastValue:2,
             question:["Brave", "Inspiring", "Submissive", "Timid"]
         },
         answer9:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:2,
             question:["Sociable", "Patient", "Independent", "Soft-spoken"]
         },
         answer10:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:3,
+            leastValue:4,
             question:["Adventurous", "Receptive", "Warm", "Moderate"]
         },
         answer11:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:2,
+            leastValue:1,
             question:["Talkative", "Controlled", "Customary", "Decisive"]
         },
         answer12:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:2,
+            leastValue:1,
             question:["Polished", "Daring", "Diplomatic", "Satisfied"]
         },
         answer13:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:3,
+            leastValue:2,
             question:["Aggressive", "Entertaining", "Easy mark", "Fearful"]
         },
         answer14:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:4,
             question:["Cautious", "Decided", "Convincing", "Pleasant"]
         },
         answer15:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:3,
+            leastValue:2,
             question:["Willing", "Eager", "Agreeable", "Enthusiastic"]
         },
         answer16:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:3,
+            leastValue:2,
             question:["Confident", "Compassionate", "Tolerant", "Assertive"]
         },
         answer17:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:4,
             question:["Well-disciplined", "Generous", "Animated", "Persistent"]
         },
         answer18:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:2,
             question:["Admirable", "Kind", "Resigned", "Force of character"]
         },
         answer19:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:3,
+            leastValue:2,
             question:["Respectful", "Enterprising", "Optimistic", "Willing to please"]
         },
         answer20:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:2,
+            leastValue:1,
             question:["Argumentative", "Flexible", "Nonchalant", "Carefree"]
         },
         answer21:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:4,
             question:["Trusting", "Contented", "Positive", "Peaceful"]
         },
         answer22:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:1,
+            leastValue:3,
             question:["Good mixer", "Cultured", "Vigorous", "Lenient"]
         },
         answer23:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:3,
+            leastValue:1,
             question:["Companionable", "Accurate", "Outspoken", "Restrained"]
         },
         answer24:{
-            mostValue:'',
-            leastValue:'',
+            mostValue:4,
+            leastValue:1,
             question:["Restless", "Neighbourly", "Popular", "Orderly"]
         }
     }
@@ -133,6 +133,7 @@ const reducer = (state = initialState, action) => {
             count:state.count - 1
         }
     }
+
     if(action.type === 'ADD_COUNT'){
         console.log(state.question);
         return{
@@ -140,6 +141,7 @@ const reducer = (state = initialState, action) => {
             count:state.count + 1
         }
     }
+
     if(action.type === 'UPDATE_ANSWERS'){
         const newObj = {
             ...state.question,
@@ -151,6 +153,10 @@ const reducer = (state = initialState, action) => {
             ...state,
             question:newObj
         }
+    }
+
+    if(action.type === 'SUBMIT_ANSWERS'){
+        return state;
     }
 
     return state;
