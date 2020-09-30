@@ -1,7 +1,9 @@
 
+import classes from './DISCResult.module.css';
 import { CircularProgress, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import LeastGraph from './LeastGraph/LeastGraph';
 import MostGraph from './MostGraph/MostGraph';
 
 class DISCResult extends Component {
@@ -183,12 +185,17 @@ class DISCResult extends Component {
 
         return(
             <React.Fragment>
-                <div>
+                <div className={classes.Graphs}>
                     <MostGraph 
                         dValue={most.D} 
                         iValue={most.I}
                         sValue={most.S}
                         cValue={most.C}/>
+                    <LeastGraph 
+                        dValue={least.D} 
+                        iValue={least.I}
+                        sValue={least.S}
+                        cValue={least.C}/>
                 </div>
                 
             </React.Fragment>

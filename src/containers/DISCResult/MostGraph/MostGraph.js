@@ -217,10 +217,10 @@ const MostGraph = (props) => {
 
     return(
         <React.Fragment>
-            <Typography style={{marginBottom:20}} variant="h2">Most</Typography>
+            <Typography style={{marginBottom:20}} variant="h3">Most</Typography>
             <ComposedChart width={500} height={500} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <YAxis />
-                <XAxis dataKey="name"/>
+                <YAxis interval="preserveEnd" style={{fontSize:"1.5rem"}}/>
+                <XAxis style={{fontSize:"1.5rem"}} dataKey="name"/>
                 <Tooltip/>
                 <Line type="monotone" dataKey="amount" stroke="#8884d8"></Line>
             </ComposedChart>
