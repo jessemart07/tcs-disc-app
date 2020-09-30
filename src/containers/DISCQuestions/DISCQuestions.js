@@ -2,12 +2,13 @@ import classes from './DISCQuestions.module.css';
 import React, { Component } from 'react';
 import green from '@material-ui/core/colors/green';
 import Q from '../../components/Question/Question';
-import { Button, LinearProgress } from '@material-ui/core';
+import { Button, LinearProgress, Typography} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 
 class DISCQuestions extends Component {
     state={
-        count:24,
+        count:1,
         question:{
             answer1:{
                 mostValue:'',
@@ -146,6 +147,7 @@ class DISCQuestions extends Component {
               }
             }
           })((props) => <Button color="default" {...props} />);
+
         const addCount = () => {
             this.setState({
                 ...this.state,
@@ -160,50 +162,89 @@ class DISCQuestions extends Component {
                 count: this.state.count - 1
             })
         }
-        const primary = green[500];
-        const DisplayedQuestions = {...this.state};
 
-        const Questions = Object.keys(DisplayedQuestions.question).map((qKey, index) => {
-            console.log(DisplayedQuestions.question[qKey]);
+        const handleChange = (obj, objKey) => {
+            
+            let newObj = {
+                ...this.state.question,
+                [objKey]:obj
+            };
+            
+            this.setState({
+                count:this.state.count,
+                question:newObj
+            })
+        }
+
+        const onSubmit = () => {
+
+        }
+
+        const Questions = Object.keys(this.props.questions).map((qKey, index) => {
+            
             return <Q 
-                    key={index}
+                    key={qKey}
+                    objKey={qKey}
                     index={index+1} 
-                    most={DisplayedQuestions.question[qKey].most} 
-                    least={DisplayedQuestions.question[qKey].least} 
-                    questions={DisplayedQuestions.question[qKey].question}
-                    count={DisplayedQuestions.count}/>
+                    most={this.props.questions[qKey].mostValue} 
+                    least={this.props.questions[qKey].leastValue} 
+                    questions={this.props.questions[qKey].question}
+                    count={this.props.count}
+                    change={this.props.onChange}/>
         })
 
         return(
-            
-            <div className={classes.box}>
-                <LinearProgress variant="determinate" value={(this.state.count/24)*100}/>
-                <div className={classes.questionContainer}>
-                {Questions}
+            <React.Fragment>
+                <LinearProgress variant="determinate" style={{maxWidth:800, margin:"0 auto"}} value={(this.props.count/24)*100}/>
+                <div className={classes.box}>
+                    <Typography style={{fontSize:"1rem", width:"40%", textAlign:"center"}} variant="body1">
+                    Select <strong>one</strong> characteristic you relate to the 
+                    most and <strong>one</strong> characteristic you relate to 
+                    the least</Typography>
+                    <div className={classes.questionContainer}>
+                    {Questions}
+                    </div>
+                    <div className={classes.buttons}>
+                    {
+                    this.props.count > 1 ? <Button
+                        onClick={this.props.onSubCount} 
+                        style={{margin:5}} 
+                        color="primary" 
+                        variant="contained">Back</Button> : null
+                    }   
+                    {
+                    this.props.count === 24 ? <GreenButton
+                        style={{margin:5}} 
+                        variant="contained"
+                        onSubmit={onSubmit}>Submit</GreenButton> : null
+                    }   
+                    {
+                    this.props.count < 24 ? <Button 
+                        onClick={this.props.onAddCount} 
+                        style={{margin:5}} 
+                        color="primary" 
+                        variant="contained">Next</Button> : null
+                    }
+                    </div>
                 </div>
-                {
-                 this.state.count === 24 ? <GreenButton
-                    style={{float:"right", margin:5}} 
-                    variant="contained">Submit</GreenButton> : null
-                }   
-                {
-                this.state.count < 24 ? <Button 
-                    onClick={addCount} 
-                    style={{float:"right", margin:5}} 
-                    color="primary" 
-                    variant="contained">Next</Button> : null
-                }
-                {
-                 this.state.count > 1 ? <Button
-                    onClick={subCount} 
-                    style={{float:"right", margin:5}} 
-                    color="primary" 
-                    variant="contained">Back</Button> : null
-                }   
-                
-            </div>
+            </React.Fragment>
         )
     }
 }
 
-export default DISCQuestions;
+const mapStateToProps = state => {
+    return {
+        count: state.count,
+        questions: state.question
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSubCount: () => dispatch({type:'SUB_COUNT'}),
+        onAddCount: () => dispatch({type:'ADD_COUNT'}),
+        onChange: (obj, objKey) => dispatch({type:'UPDATE_ANSWERS', obj:obj, key:objKey})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DISCQuestions);

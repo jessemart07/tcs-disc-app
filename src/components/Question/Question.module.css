@@ -1,17 +1,12 @@
 .container{
-    width:400px;
     padding:20px;
 }
 .title{
-    width:400px;
     margin-bottom: 20px;
 }
 .Questions{
     display: flex;
-    margin-left: 50px;
     margin-top:20px;
-    width:350px;
-
 }
 .questionTitle{
     margin-top:10px;

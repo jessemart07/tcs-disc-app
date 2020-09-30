@@ -5,39 +5,39 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import React, { useState } from 'react';
-import Grow from '@material-ui/core/Grow';
+import Zoom from '@material-ui/core/Zoom';
 import classes from './Question.module.css';
 const Questions = (props) => {
     let [question, setQuestion] = useState({
-        most:props.mostValue,
-        least:props.leastValue,
-        q:[...props.questions]
+        mostValue:props.most,
+        leastValue:props.least,
+        question:[...props.questions]
     })
+    
     const handleMostChange = (event) => {
         const most = {
             ...question,
-            most:event.target.value
+            mostValue:event.target.value
         }
         setQuestion(most);
+        props.change(most, props.objKey);
     };
 
     const handleLeastChange = (event) => {
         const least = {
             ...question,
-            least:event.target.value
+            leastValue:event.target.value
         }
         setQuestion(least);
+        props.change(least, props.objKey);
     };
+
     return(
-        <Grow in={props.count === props.index}>
+        <Zoom in={props.count === props.index}>
         <div style={props.count === props.index ? {display:"block"} : {display:"none"}} className={classes.container}>
             <div className={classes.title}>
                 <Typography variant="h4" >Question {props.index}</Typography>
             </div>
-            <Typography style={{fontSize:"1rem"}} variant="body1">
-                Select <strong>one</strong> characteristic you relate to the 
-                most and <strong>one</strong> characteristic you relate to 
-                the least</Typography>
             <div className={classes.Questions}>
                 <div className={classes.radio}>
                     <FormControl component="fieldset">
@@ -60,13 +60,13 @@ const Questions = (props) => {
                     </FormControl>
                 </div>
                 <div className={classes.questionTitle}>
-                    {question.q.map(que =>(
+                    {question.question.map(que =>(
                         <Typography key={que} style={{margin:10}} variant="h5">{que}</Typography>
                     ))}
                 </div>
             </div>
         </div>
-        </Grow>
+        </Zoom>
     )
 }
 export default Questions;
