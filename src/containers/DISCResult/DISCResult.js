@@ -184,21 +184,6 @@ class DISCResult extends Component {
         return(
             <React.Fragment>
                 <div>
-                    <div>
-                        <Typography variant="h5">D: {most.D}</Typography>
-                        <Typography variant="h5">I: {most.I}</Typography>
-                        <Typography variant="h5">S: {most.S}</Typography>
-                        <Typography variant="h5">C: {most.C}</Typography>
-                        <Typography variant="h5">Blank: {most.Blank}</Typography>
-                    </div>
-
-                    <div>
-                        <Typography variant="h5">D: {least.D}</Typography>
-                        <Typography variant="h5">I: {least.I}</Typography>
-                        <Typography variant="h5">S: {least.S}</Typography>
-                        <Typography variant="h5">C: {least.C}</Typography>
-                        <Typography variant="h5">Blank: {least.Blank}</Typography>
-                    </div>
                     <MostGraph 
                         dValue={most.D} 
                         iValue={most.I}
