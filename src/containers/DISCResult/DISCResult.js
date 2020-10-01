@@ -197,7 +197,6 @@ class DISCResult extends Component {
                         sValue={least.S}
                         cValue={least.C}/>
                 </div>
-                
             </React.Fragment>
         )
     }

@@ -1,6 +1,7 @@
-import { Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import { LineChart, Line, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts';
+import TimelineIcon from '@material-ui/icons/Timeline';
 
 const MostGraph = (props) => {
     let dWeight = 0;
@@ -217,13 +218,22 @@ const MostGraph = (props) => {
 
     return(
         <React.Fragment>
-            <Typography style={{marginBottom:20}} variant="h3">Most</Typography>
-            <ComposedChart width={500} height={500} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <YAxis interval="preserveEnd" style={{fontSize:"1.5rem"}}/>
-                <XAxis style={{fontSize:"1.5rem"}} dataKey="name"/>
-                <Tooltip/>
-                <Line type="monotone" dataKey="amount" stroke="#8884d8"></Line>
-            </ComposedChart>
+            <Paper elevation="2" style={{padding:15, margin:10}}>
+            <Typography style={{marginBottom:20}} variant="h3">
+            <TimelineIcon 
+                        style={{
+                            borderRadius:3,
+                            padding:2, 
+                            backgroundColor:"#2196f3",
+                            color:"#fff", 
+                            fontSize:"2.5rem"}}/> Most </Typography>
+                <ComposedChart width={500} height={500} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <YAxis interval="preserveEnd" style={{fontSize:"1.5rem"}}/>
+                    <XAxis style={{fontSize:"1.5rem"}} dataKey="name"/>
+                    <Tooltip/>
+                    <Line type="monotone" dataKey="amount" stroke="#8884d8"></Line>
+                </ComposedChart>
+            </Paper>
         </React.Fragment>
         
         

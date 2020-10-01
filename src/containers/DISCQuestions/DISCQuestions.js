@@ -32,7 +32,9 @@ class DISCQuestions extends Component {
                     least={this.props.questions[qKey].leastValue} 
                     questions={this.props.questions[qKey].question}
                     count={this.props.count}
-                    change={this.props.onChange}/>
+                    change={this.props.onChange}
+                    addCount={this.props.onAddCount}
+                    subCount={this.props.onSubCount}/>
         })
 
         return(
@@ -46,28 +48,7 @@ class DISCQuestions extends Component {
                     <div className={classes.questionContainer}>
                     {Questions}
                     </div>
-                    <div className={classes.buttons}>
-                    {
-                    this.props.count > 1 ? <Button
-                        onClick={this.props.onSubCount} 
-                        style={{margin:5}} 
-                        color="primary" 
-                        variant="contained">Back</Button> : null
-                    }   
-                    {
-                    this.props.count === 24 ? <NavLink style={{textDecoration:"none"}} to="/result"><GreenButton
-                        style={{margin:5}} 
-                        variant="contained"
-                        onSubmit={this.props.onSubmit}>Submit</GreenButton></NavLink> : null
-                    }   
-                    {
-                    this.props.count < 24 ? <Button 
-                        onClick={this.props.onAddCount} 
-                        style={{margin:5}} 
-                        color="primary" 
-                        variant="contained">Next</Button> : null
-                    }
-                    </div>
+                    
                 </div>
             </React.Fragment>
         )

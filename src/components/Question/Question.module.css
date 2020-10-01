@@ -11,3 +11,8 @@
 .questionTitle{
     margin-top:10px;
 }
+.buttons{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
