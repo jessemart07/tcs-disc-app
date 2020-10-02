@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, FormHelperText, Typography} from '@material-ui/core';
 import green from '@material-ui/core/colors/green';
 import { withStyles } from '@material-ui/core/styles';
-import {NavLink, Redirect, useHistory} from 'react-router-dom';
+
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -12,8 +12,6 @@ import Zoom from '@material-ui/core/Zoom';
 import classes from './Question.module.css';
 import { compose } from 'redux';
 const Questions = (props) => {
-    let history = useHistory(); 
-
     let [question, setQuestion] = useState({
         mostValue:props.most,
         leastValue:props.least,
@@ -44,7 +42,6 @@ const Questions = (props) => {
             mostValue:event.target.value
         }
         setQuestion(most);
-        props.change(most, props.objKey);
     };
 
     const handleLeastChange = (event) => {
@@ -83,11 +80,13 @@ const Questions = (props) => {
                 errText: ""
             })
             if(props.count === 24){
-                console.log("redirect");
-                history.push("/result");
+                props.change(question, props.objKey);
+                props.submit(true);
             }else{
+                props.change(question, props.objKey);
                 props.addCount();
             }
+            
         }
     }
 
@@ -96,7 +95,7 @@ const Questions = (props) => {
             <Zoom in={props.count === props.index}>
                 <div style={props.count === props.index ? {display:"block"} : {display:"none"}} className={classes.container}>
                     <div className={classes.title}>
-                        <Typography variant="h4" >Question {props.index}</Typography>
+                        <h1 className={classes.questionHeader}>Question {props.index}</h1>
                     </div>
                     <div className={classes.Questions}>
                         <div className={classes.radio}>

@@ -1,7 +1,32 @@
-.Graphs{
-    
-    margin-top:100px;
+
+.outerContainer{
+    height:100vh;
+    width:80%;
+    margin:0 auto;
+    padding:25px 50px 25px 50px;
+}
+.resultsContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.graphs{
     display: flex;
     justify-content: center;
     width: 100%;
+}
+.score{
+    text-align: center;
+    width: 50%;
+}
+.header{
+    margin: 0px 0px 0px 20px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 45px;
+    font-size: 300;
+}
+.scoreResult{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 50px;
+    margin:0;
 }

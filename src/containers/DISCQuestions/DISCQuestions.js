@@ -1,29 +1,51 @@
 import classes from './DISCQuestions.module.css';
 import React, { Component } from 'react';
-import green from '@material-ui/core/colors/green';
 import Q from '../../components/Question/Question';
-import { Button, LinearProgress, Typography} from '@material-ui/core';
+import { 
+    Button, 
+    Dialog, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle,
+    DialogActions, 
+    LinearProgress, 
+    Typography,
+    Paper } from '@material-ui/core';
+import {NavLink, useHistory} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import {NavLink} from 'react-router-dom';
+
 
 class DISCQuestions extends Component {
-    render() {
-        const GreenButton = withStyles({
-            root: {
-              backgroundColor: green[400],
-              color:"white",
-              '&:hover':{
-                backgroundColor: green[600],
-              },
-              '&:focus':{
-                backgroundColor: green[600],
-              }
-            }
-          })((props) => <Button color="default" {...props} />);
+    state = {
+        open:false,
+        redirect: false
+    };
+    
+    redirectOnSubmit = () => {
+        this.setState({
+            ...this.state,
+            redirect:true
+        });
+    };
 
+    handleDialog = (status) => {
+        this.setState({
+            ...this.state,
+            open:status
+        });
+    };
+
+    onSubmit = () => {
+        console.log(this.props.questions);
+        const val = this.props.questions;
+        localStorage.setItem('questions', val);
+    }
+    
+
+    render() {
+        
         const Questions = Object.keys(this.props.questions).map((qKey, index) => {
-            
             return <Q 
                     key={qKey}
                     objKey={qKey}
@@ -34,22 +56,44 @@ class DISCQuestions extends Component {
                     count={this.props.count}
                     change={this.props.onChange}
                     addCount={this.props.onAddCount}
-                    subCount={this.props.onSubCount}/>
+                    subCount={this.props.onSubCount}
+                    submit={this.handleDialog}/>
         })
 
         return(
             <React.Fragment>
+                <div className={classes}>
                 <LinearProgress variant="determinate" style={{maxWidth:800, margin:"0 auto"}} value={(this.props.count/24)*100}/>
-                <div className={classes.box}>
-                    <Typography style={{fontSize:"1rem", width:"40%", textAlign:"center"}} variant="body1">
+                <Paper className={classes.box}>
+                    <Typography style={{fontSize:"1rem", width:"50%", textAlign:"center"}} variant="body1">
                     Select <strong>one</strong> characteristic you relate to the 
                     most and <strong>one</strong> characteristic you relate to 
                     the least</Typography>
                     <div className={classes.questionContainer}>
-                    {Questions}
+                        {Questions}
                     </div>
-                    
+                </Paper>
                 </div>
+                <Dialog 
+                    open={this.state.open} 
+                    onClose={() => this.handleDialog(false)}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                        <DialogTitle id="alert-dialog-title">{"Are you sure you'd like to continue?"}</DialogTitle>
+                        <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Clicking continue will take you to your results
+                        </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={() => this.handleDialog(false)} color="primary">
+                            Cancel
+                        </Button>
+                        <NavLink to="/result" onClick={this.onSubmit} style={{textDecoration:"none"}}><Button  color="primary" autoFocus>
+                            Continue
+                        </Button></NavLink>
+                        </DialogActions>
+                </Dialog>
             </React.Fragment>
         )
     }
@@ -66,8 +110,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onSubCount: () => dispatch({type:'SUB_COUNT'}),
         onAddCount: () => dispatch({type:'ADD_COUNT'}),
-        onChange: (obj, objKey) => dispatch({type:'UPDATE_ANSWERS', obj:obj, key:objKey}),
-        onSubmit: (obj) => dispatch({type:'SUBMIT_ANSWERS', obj:obj})
+        onChange: (obj, objKey) => dispatch({type:'UPDATE_ANSWERS', obj:obj, key:objKey})
     }
 }
 
