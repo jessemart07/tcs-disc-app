@@ -1,7 +1,7 @@
 import { Typography, Paper} from '@material-ui/core';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import React from 'react';
-import { Line, ComposedChart, XAxis, YAxis, Tooltip } from 'recharts';
+import { ReferenceLine, Line, ComposedChart, XAxis, YAxis, Tooltip } from 'recharts';
 
 const LeastGraph = (props) => {
     let dWeight = 0;
@@ -231,6 +231,31 @@ const LeastGraph = (props) => {
         }
     ]
 
+    let firstMax = 0;
+    let scndMax = 0;
+    let max = "";
+    let scnd = "";
+    
+    data.map((obj, index) => {
+        if(index === 0){
+            firstMax = obj.amount;
+            max = obj.name
+        }else{
+            if(obj.amount > firstMax && obj.amount > scndMax){
+                var tempValue = firstMax;
+                var tempName = max;
+                firstMax = obj.amount;
+                max = obj.name;
+                scndMax = tempValue;
+                scnd = tempName;
+            }
+            else if(obj.amount > scndMax && obj.amount < firstMax){
+                scndMax = obj.amount;
+                scnd = obj.name
+            }
+        }
+    })
+
     return(
         <React.Fragment>
             <Paper elevation="2" style={{padding:15 , margin:10}}>
@@ -241,11 +266,12 @@ const LeastGraph = (props) => {
                             padding:2, 
                             backgroundColor:"#2196f3",
                             color:"#fff", 
-                            fontSize:"2.5rem"}}/> Least </Typography>
-                <ComposedChart width={500} height={500} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <YAxis interval="preserveEnd" style={{fontSize:"1.5rem"}} />
+                            fontSize:"2.5rem"}}/> Least-<Typography style={{display:"inline",fontSize:"2rem", fontStyle:"italic"}}>Natural behaviour</Typography> </Typography>
+                <ComposedChart width={500} height={500} data={props.data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <YAxis domain={[0,100]} style={{fontSize:"1.5rem"}} />
                     <XAxis style={{fontSize:"1.5rem"}} dataKey="name"/>
                     <Tooltip/>
+                    <ReferenceLine y={50} stroke="black"></ReferenceLine>
                     <Line type="monotone" dataKey="amount" stroke="#8884d8"></Line>
                 </ComposedChart>
             </Paper>
