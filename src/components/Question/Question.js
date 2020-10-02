@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Button, FormHelperText, Typography} from '@material-ui/core';
-import green from '@material-ui/core/colors/green';
+import { Button, Typography} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-
+import green from '@material-ui/core/colors/green';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,7 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Zoom from '@material-ui/core/Zoom';
 import classes from './Question.module.css';
-import { compose } from 'redux';
 const Questions = (props) => {
     let [question, setQuestion] = useState({
         mostValue:props.most,
@@ -50,7 +48,6 @@ const Questions = (props) => {
             leastValue:event.target.value
         }
         setQuestion(least);
-        props.change(least, props.objKey);
     };
 
     const checkAnswers = () => {

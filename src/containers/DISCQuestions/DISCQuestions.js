@@ -11,8 +11,7 @@ import {
     LinearProgress, 
     Typography,
     Paper } from '@material-ui/core';
-import {NavLink, useHistory} from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import {NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
@@ -39,7 +38,7 @@ class DISCQuestions extends Component {
     onSubmit = () => {
         console.log(this.props.questions);
         const val = this.props.questions;
-        localStorage.setItem('questions', val);
+        localStorage.setItem('questions', JSON.stringify(val));
     }
     
 

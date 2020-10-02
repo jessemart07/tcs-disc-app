@@ -2,14 +2,14 @@
 import classes from './DISCResult.module.css';
 import { Typography, Paper } from '@material-ui/core';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import DISCGraph from './DISCGraph/DISCGraph';
 
 class DISCResult extends Component {
     state={
-        answers:localStorage.getItem('questions')
+        answers:JSON.parse(localStorage.getItem('questions'))
     }
     render(){
+        console.log(this.state);
         // answers object
         // all most and least values will be changed to "D", "I", "S", "C" based 
         // on their value
@@ -122,8 +122,8 @@ class DISCResult extends Component {
         let blankTotal = 0;
 
         // calculate DISC totals
-        Object.keys(this.props.answers).map((key, index) => {
-            const val = ans["answer"+(index+1)].most[this.props.answers[key].mostValue-1];
+        Object.keys(this.state.answers).map((key, index) => {
+            const val = ans["answer"+(index+1)].most[this.state.answers[key].mostValue-1];
             switch(val){
                 case'D':
                     dTotal++;
@@ -162,8 +162,8 @@ class DISCResult extends Component {
         blankTotal = 0;
 
         // calculate DISC totals
-        Object.keys(this.props.answers).map((key, index) => {
-            const val = ans["answer"+(index+1)].least[this.props.answers[key].leastValue-1];
+        Object.keys(this.state.answers).map((key, index) => {
+            const val = ans["answer"+(index+1)].least[this.state.answers[key].leastValue-1];
             switch(val){
                 case'D':
                     dTotal++;
@@ -694,15 +694,8 @@ class DISCResult extends Component {
                         </div>
                     </div>
                 </Paper>
-           
         )
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        answers: state.question
-    }
-}
-
-export default connect(mapStateToProps)(DISCResult);
+export default DISCResult;
