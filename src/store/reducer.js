@@ -1,5 +1,5 @@
 const initialState = {
-    count:24,
+    count:1,
     question:{
         answer1:{
             mostValue:0,

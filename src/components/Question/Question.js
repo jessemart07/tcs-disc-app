@@ -119,7 +119,7 @@ const Questions = (props) => {
                         </div>
                         <div className={classes.questionTitle}>
                             {question.question.map(que =>(
-                                <Typography key={que} style={{margin:10}} variant="h5">{que}</Typography>
+                                <p key={que} className={classes.characteristics} variant="h5">{que}</p>
                             ))}
                         </div>
                     </div>

@@ -1,0 +1,29 @@
+.graph{
+    padding:30px;
+    margin:10px;
+    width:40%;
+}
+
+@media (max-width:420px){
+    .graph{
+        width:90%;
+        margin:5px 0px 10px 0px;
+        padding:5px;
+    }
+}
+
+@media (min-width:420px) and (max-width:850px){
+    .graph{
+        width:90%;
+        margin:5px 0px 10px 0px;
+        padding:5px;
+    }
+}
+
+@media (min-width:850px) and (max-width:1024px){
+    .graph{
+        width:80%;
+        margin:5px 0px 10px 0px;
+        padding:5px;
+    }
+}

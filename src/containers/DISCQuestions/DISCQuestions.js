@@ -64,7 +64,7 @@ class DISCQuestions extends Component {
                 <div className={classes}>
                 <LinearProgress variant="determinate" style={{maxWidth:800, margin:"0 auto"}} value={(this.props.count/24)*100}/>
                 <Paper className={classes.box}>
-                    <Typography style={{fontSize:"1rem", width:"50%", textAlign:"center"}} variant="body1">
+                    <Typography className={classes.description} variant="body1">
                     Select <strong>one</strong> characteristic you relate to the 
                     most and <strong>one</strong> characteristic you relate to 
                     the least</Typography>

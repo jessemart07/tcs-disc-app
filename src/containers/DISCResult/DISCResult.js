@@ -55,8 +55,8 @@ class DISCResult extends Component {
                 least:["D", "-", "I", "S"]
             },
             answer11:{
-                most:["-", "D", "C", "S"],
-                least:["I", "D", "-", "S"]
+                most:["I", "S", "-", "C"],
+                least:["I", "S", "C", "D"]
             },
             answer12:{
                 most:["-", "D", "C", "S"],
@@ -214,7 +214,7 @@ class DISCResult extends Component {
                 dWeight = 78;
                 break;
             case 3:
-                dWeight = 67;
+                dWeight = 68;
                 break;
             case 4: 
                 dWeight = 60;
@@ -226,16 +226,16 @@ class DISCResult extends Component {
                 dWeight = 45;
                 break;
             case 7: 
-                dWeight = 40;
+                dWeight = 41;
                 break;
             case 8: 
-                dWeight = 40;
+                dWeight = 41;
                 break;
             case 9:
-                dWeight = 35;
+                dWeight = 33;
                 break;
             case 10:
-                dWeight = 30;
+                dWeight = 31;
                 break;
             case 11: 
                 dWeight = 26;
@@ -250,7 +250,7 @@ class DISCResult extends Component {
                 dWeight = 12;
                 break;
             case 15:
-                dWeight = 10;
+                dWeight = 9;
                 break;
             case 16: 
                 dWeight = 6;
@@ -268,13 +268,13 @@ class DISCResult extends Component {
                 iWeight = 100;
                 break;
             case 1: 
-                iWeight = 87;
+                iWeight = 85;
                 break;
             case 2:
-                iWeight = 78;
+                iWeight = 76;
                 break;
             case 3:
-                iWeight = 68;
+                iWeight = 66;
                 break;
             case 4: 
                 iWeight = 55;
@@ -289,7 +289,7 @@ class DISCResult extends Component {
                 iWeight = 28;
                 break;
             case 8: 
-                iWeight = 25;
+                iWeight = 24;
                 break;
             case 9:
                 iWeight = 18;
@@ -297,10 +297,13 @@ class DISCResult extends Component {
             case 10:
                 iWeight = 11;
                 break;
+            case 11:
+                iWeight = 6;
+                break;
             case 19:
-                iWeight = 2;
+                iWeight = 1;
             default:
-                iWeight = 5;
+                iWeight = 3;
                 break;
         }
     
@@ -312,16 +315,16 @@ class DISCResult extends Component {
                 sWeight = 95;
                 break;
             case 2:
-                sWeight = 88;
+                sWeight = 84;
                 break;
             case 3:
-                sWeight = 79;
+                sWeight = 75;
                 break;
             case 4: 
-                sWeight = 68;
+                sWeight = 65;
                 break;
             case 5: 
-                sWeight = 56;
+                sWeight = 58;
                 break;
             case 6: 
                 sWeight = 52;
@@ -336,19 +339,19 @@ class DISCResult extends Component {
                 sWeight = 30;
                 break;
             case 10:
-                sWeight = 25;
+                sWeight = 27;
                 break;
             case 11: 
-                sWeight = 15;
+                sWeight = 16;
                 break;
             case 12:
                 sWeight = 8;
                 break;
             case 13: 
-                sWeight = 6;
+                sWeight = 4;
                 break;
             case 19:
-                sWeight = 2;
+                sWeight = 1;
                 break;
             default:
                 sWeight = 4;
@@ -363,28 +366,28 @@ class DISCResult extends Component {
                 cWeight = 95;
                 break;
             case 2:
-                cWeight = 85;
+                cWeight = 83;
                 break;
             case 3:
-                cWeight = 76;
+                cWeight = 74;
                 break;
             case 4: 
-                cWeight = 68;
+                cWeight = 64;
                 break;
             case 5: 
-                cWeight = 55;
+                cWeight = 56;
                 break;
             case 6: 
                 cWeight = 52;
                 break;
             case 7: 
-                cWeight = 46;
+                cWeight = 44;
                 break;
             case 8: 
                 cWeight = 40;
                 break;
             case 9:
-                cWeight = 35;
+                cWeight = 33;
                 break;
             case 10:
                 cWeight = 25;
@@ -393,7 +396,7 @@ class DISCResult extends Component {
                 cWeight = 15;
                 break;
             case 12:
-                cWeight = 8;
+                cWeight = 6;
                 break;
             case 13:
                 cWeight = 4;
@@ -602,7 +605,7 @@ class DISCResult extends Component {
                 sWeight = 80;
                 break;
             case 11: 
-                sWeight = 85;
+                sWeight = 88;
                 break;
             case 12:
                 sWeight = 92;
@@ -676,24 +679,23 @@ class DISCResult extends Component {
         ]
 
         return(
-            
-                <Paper className={classes.outerContainer} style={{backgroundColor:"#eeeeee"}}>
-                    <h1 className={classes.header}>Your results:</h1>
-                    <div className={classes.resultsContainer}>
-                        <div className={classes.graphs}>
-                            <DISCGraph title="Most" subtitle="Adapted behaviour" data={mostData}/>
-                            <DISCGraph title="Least" subtitle="Natural behaviour" data={leastData}/>
-                        </div>
-                        <div className={classes.score}>
-                            <Paper style={{backgroundColor:"#bdbdbd", padding:10, marginTop:40}}>
-                                <Typography variant="h5">
-                                    You scored the highest in:
-                                </Typography>
-                                <h1 className={classes.scoreResult}>{max} {scnd}</h1>
-                            </Paper>
-                        </div>
+            <Paper className={classes.outerContainer} style={{backgroundColor:"#eeeeee"}}>
+                <h1 className={classes.header}>Your results:</h1>
+                <div className={classes.resultsContainer}>
+                    <div className={classes.graphs}>
+                        <DISCGraph title="Most" subtitle="Adapted behaviour" data={mostData}/>
+                        <DISCGraph title="Least" subtitle="Natural behaviour" data={leastData}/>
                     </div>
-                </Paper>
+                    <div className={classes.score}>
+                        <Paper style={{backgroundColor:"#bdbdbd", padding:10, marginTop:40}}>
+                            <Typography variant="h5">
+                                You scored the highest in:
+                            </Typography>
+                            <h1 className={classes.scoreResult}>{max} {scnd}</h1>
+                        </Paper>
+                    </div>
+                </div>
+            </Paper>
         )
     }
 }
