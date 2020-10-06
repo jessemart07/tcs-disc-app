@@ -35,18 +35,38 @@ const Questions = (props) => {
       })((props) => <Button color="default" {...props} />);
     
     const handleMostChange = (event) => {
-        const most = {
-            ...question,
-            mostValue:event.target.value
+        let most = {};
+        if(event.target.value === question.leastValue){
+            most = {
+                ...question,
+                mostValue:event.target.value,
+                leastValue:0
+            }
+        }else{
+            most = {
+                ...question,
+                mostValue:event.target.value
+            }
         }
+        
         setQuestion(most);
     };
 
     const handleLeastChange = (event) => {
-        const least = {
-            ...question,
-            leastValue:event.target.value
+        let least = {};
+        if(event.target.value === question.mostValue){
+            least = {
+                ...question,
+                leastValue:event.target.value,
+                mostValue: 0
+            }
+        }else{
+            least = {
+                ...question,
+                leastValue:event.target.value
+            }
         }
+
         setQuestion(least);
     };
 
@@ -98,21 +118,21 @@ const Questions = (props) => {
                         <div className={classes.radio}>
                             <FormControl component="fieldset" error={error.error}>
                                 <FormLabel component="legend">Most</FormLabel>
-                                <RadioGroup aria-label="most" name={"most" + props.index} value={question.most} onChange={handleMostChange}>
-                                    <FormControlLabel value="1" control={<Radio color="primary" />} />
-                                    <FormControlLabel value="2" control={<Radio color="primary" />} />
-                                    <FormControlLabel value="3" control={<Radio color="primary" />}/>
-                                    <FormControlLabel value="4" control={<Radio color="primary" />}/>
+                                <RadioGroup aria-label="most" name={"most" + props.index} value={question.mostValue} >
+                                    <FormControlLabel value="1" control={<Radio color="primary" onClick={handleMostChange}/>} />
+                                    <FormControlLabel value="2" control={<Radio color="primary" onClick={handleMostChange}/>} />
+                                    <FormControlLabel value="3" control={<Radio color="primary" onClick={handleMostChange}/>}/>
+                                    <FormControlLabel value="4" control={<Radio color="primary" onClick={handleMostChange}/>}/>
                                 </RadioGroup>
                                 
                             </FormControl>
                             <FormControl component="fieldset" error={error.error}>
                                 <FormLabel component="legend">Least</FormLabel>
-                                <RadioGroup  aria-label="least" name={"least" + props.index} value={question.least} onChange={handleLeastChange}>
-                                    <FormControlLabel value="1" control={<Radio color="primary" />} />
-                                    <FormControlLabel value="2" control={<Radio color="primary" />} />
-                                    <FormControlLabel value="3" control={<Radio color="primary" />}/>
-                                    <FormControlLabel value="4" control={<Radio color="primary" />}/>
+                                <RadioGroup  aria-label="least" name={"least" + props.index} value={question.leastValue} >
+                                    <FormControlLabel value="1" control={<Radio color="primary" onClick={handleLeastChange}/>} />
+                                    <FormControlLabel value="2" control={<Radio color="primary" onClick={handleLeastChange}/>} />
+                                    <FormControlLabel value="3" control={<Radio color="primary" onClick={handleLeastChange}/>}/>
+                                    <FormControlLabel value="4" control={<Radio color="primary" onClick={handleLeastChange}/>}/>
                                 </RadioGroup>
                                 
                             </FormControl>
