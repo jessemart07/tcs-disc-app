@@ -1,5 +1,5 @@
 const initialState = {
-    count:1,
+    count:24,
     question:{
         answer1:{
             mostValue:0,
@@ -121,6 +121,11 @@ const initialState = {
             leastValue:0,
             question:["Restless", "Neighbourly", "Popular", "Orderly"]
         }
+    },
+    result:{
+        leastData:{},
+        mostData:{},
+        result:""
     }
 }
 
@@ -154,6 +159,13 @@ const reducer = (state = initialState, action) => {
         return{
             ...state,
             question:newObj
+        }
+    }
+
+    if(action.type === 'SUBMIT_RESULTS'){
+        return{
+            ...state,
+            result:action.data
         }
     }
 
