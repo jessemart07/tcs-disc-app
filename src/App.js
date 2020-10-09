@@ -7,7 +7,7 @@ import './App.css';
 function App() {
   let routes = (
     <Switch>
-      <Route path="/" exact component={DISCQuestions}/>
+      <Route path="/"  exact component={DISCQuestions}/>
       <Route path="/result" component={DISCResult}/>
     </Switch>
   )

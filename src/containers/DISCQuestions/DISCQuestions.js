@@ -12,11 +12,11 @@ import {
     Typography,
     Paper } from '@material-ui/core';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
 class DISCQuestions extends Component {
+    
     state = {
         open:false,
         error:false,
@@ -745,18 +745,15 @@ class DISCQuestions extends Component {
             leastResult: leastMax+leastScndMax,
             mostResult: mostMax+mostScndMax
         }
-        console.log(res);
+
         localStorage.setItem('questions', JSON.stringify(res));
         
-        // const queryString = window.loacation.search;
-        // if(queryString !== null){
-        //     const URLParams = new URLSearchParams(queryString);
-        //     const token = URLParams.get('learn_token');
-        // }
+        
 
         let mostID = "";
         let leastID ="";
 
+        // get most data for the database
         switch(res.mostResult){
             case "DI":
                 mostID="5434";
@@ -799,6 +796,7 @@ class DISCQuestions extends Component {
                 break;
         }
 
+        // get least ID for the database
         switch(res.leastResult){
             case "DI":
                 leastID="5440";
@@ -851,52 +849,62 @@ class DISCQuestions extends Component {
             }
         }
 
-        const config ={
-            headers:{'X-Access-Token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAwNTUwMCwiZW1haWwiOiJtYXJrQHdpeGVscy5jb20iLCJuYW1lIjoiTWFyayBTaXZld3JpZ2h0IiwiZW1wbG95ZWVfbnVtYmVyIjoiZWR1Y29fMDEiLCJhcHBfcm9sZSI6NCwib3JnYW5pc2F0aW9uIjoyOCwiY291bnRyeSI6eyJpZCI6MTAsInR5cGUiOiJjb3VudHJ5Iiwib3B0aW9uIjpudWxsLCJkZXNjcmlwdGlvbiI6IlNvdXRoIEFmcmljYSIsIm9yZ2FuaXNhdGlvbl9pZCI6MCwiY3JlYXRlZF9hdCI6IjIwMTgtMDctMTNUMDg6NDM6NDYuMDAwWiIsInVwZGF0ZWRfYXQiOiIyMDE4LTA3LTEzVDA4OjQzOjQ2LjAwMFoifSwibGFuZ3VhZ2UiOiIiLCJncm91cHMiOltdLCJpYXQiOjE2MDIxNTIzNDYsImV4cCI6MTYwMjIzODc0Nn0.y_zK6rzSPsqpcJw-PgFCgHaM6u6hUnkxp44M_zWOe1Q'}
+        const queryString = this.props.location.search;
+        const token = "";
+
+        if(queryString !== null){
+            const URLParams = new URLSearchParams(queryString);
+            token = URLParams.get('learn_token');
         }
 
-        // axios.post('https://learnapi.wixels.com/results/assessment', data1, config)
-        // .then(res => {
-        //     console.log(res);
-        //     const id = res.data.id;
-        //     const data2 = {
-        //         "detail": [
-        //             {
-        //             "question_id" : 1599,
-        //             "answer_id" : mostID,
-        //             "is_correct": true,
-        //             "explanation": "",
-        //             "assessment_result_id": id
-        //             },
-        //             {
-        //             "question_id" : 1600,
-        //             "answer_id" : leastID,
-        //             "is_correct": true,
-        //             "explanation": "",
-        //             "assessment_result_id": id
-        //             }
-        //         ]
-        //     };
-        //     axios.post('https://learnapi.wixels.com/results/assessment/227/detail', data2, config)
-        //     .then(response => {
-        //         console.log(response);
-        //         this.props.onSubmit(res);
-        //         this.props.history.push('/result');
-        //     }).catch(error => {
-        //         this.setState({
-        //             ...this.state,
-        //             error:true
-        //         })
-        //     })
-        // }).catch(error => {
-        //     this.setState({
-        //         ...this.state,
-        //         error:true
-        //     })
-        // })
+        const config ={
+            headers:{'X-Access-Token':token}
+        }
+
+        axios.post('https://learnapi.wixels.com/results/assessment', data1, config)
+        .then(res => {
+            console.log(res);
+            const id = res.data.data.id;
+            const data2 = {
+                "detail": [
+                    {
+                    "question_id" : 1599,
+                    "answer_id" : mostID,
+                    "is_correct": true,
+                    "explanation": "",
+                    "assessment_result_id": id
+                    },
+                    {
+                    "question_id" : 1600,
+                    "answer_id" : leastID,
+                    "is_correct": true,
+                    "explanation": "",
+                    "assessment_result_id": id
+                    }
+                ]
+            };
+            axios.post('https://learnapi.wixels.com/results/assessment/227/detail', data2, config)
+            .then(response => {
+                console.log(response);
+                this.props.onSubmit(res);
+                this.props.history.push('/result');
+            }).catch(error => {
+                this.setState({
+                    ...this.state,
+                    error:true
+                })
+            })
+        }).catch(error => {
+            this.setState({
+                ...this.state,
+                error:true
+            })
+        })
     }
-    
+
     render() {
+        
+        
         const Questions = Object.keys(this.props.answers).map((qKey, index) => {
             return <Q 
                     key={qKey}
