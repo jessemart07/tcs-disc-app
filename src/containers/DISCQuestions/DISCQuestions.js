@@ -11,25 +11,32 @@ import {
     LinearProgress, 
     Typography,
     Paper } from '@material-ui/core';
-import {NavLink} from 'react-router-dom';
+import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions';
+
 
 class DISCQuestions extends Component {
     state = {
         open:false,
-        redirect: false
+        error:false,
+        redirect:false
     };
 
-    
-    
-    redirectOnSubmit = () => {
+    handleRedirect = () => {
         this.setState({
             ...this.state,
             redirect:true
-        });
-    };
+        })
+    }
 
+    handleErrorDialog = (status) => {
+        this.setState({
+            ...this.state,
+            error:status
+        })
+    }
+    
     handleDialog = (status) => {
         this.setState({
             ...this.state,
@@ -38,6 +45,7 @@ class DISCQuestions extends Component {
     };
 
     onSubmit = () => {
+        this.handleDialog(false);
         const ans = {
             answer1:{
                 most:["S", "I", "C", "-"],
@@ -168,7 +176,7 @@ class DISCQuestions extends Component {
                 default:
                     break;
             }
-            
+            return;
         })
         // most object
         const most = {
@@ -177,8 +185,6 @@ class DISCQuestions extends Component {
             S: sTotal,
             C: cTotal
         };
-
-        console.log(most);
 
         dTotal = 0;
         iTotal = 0;
@@ -208,7 +214,7 @@ class DISCQuestions extends Component {
                 default:
                     break;
             }
-            
+            return;
         })
 
         // least object
@@ -218,8 +224,6 @@ class DISCQuestions extends Component {
              S: sTotal,
              C: cTotal,
         };
-
-        console.log(least);
 
         // weight variables
         let dWeight = 0;
@@ -327,6 +331,7 @@ class DISCQuestions extends Component {
                 break;
             case 19:
                 iWeight = 1;
+                break;
             default:
                 iWeight = 3;
                 break;
@@ -458,31 +463,30 @@ class DISCQuestions extends Component {
         // max and second max variables declaration
         let firstMax = 0;
         let scndMax = 0;
-        let max = "";
-        let scnd = "";
+        let leastMax = "";
+        let leastScndMax = "";
 
         // Determine the max value and the second max value
         leastData.map((obj, index) => {
             // if this is the first value
             if(index === 0){
-                
                 firstMax = obj.amount;
-                max = obj.name
+                leastMax = obj.name
             }else{
                 // object.amount should become the new max and 
                 // current max should become the second max 
                 if(obj.amount > firstMax && obj.amount > scndMax){
                     var tempValue = firstMax;
-                    var tempName = max;
+                    var tempName = leastMax;
                     firstMax = obj.amount;
-                    max = obj.name;
+                    leastMax = obj.name;
                     scndMax = tempValue;
-                    scnd = tempName;
+                    leastScndMax = tempName;
                 }
                 // object.amount should become the second max
                 else if(obj.amount > scndMax && obj.amount <= firstMax){
                     scndMax = obj.amount;
-                    scnd = obj.name
+                    leastScndMax = obj.name
                 }
             }
         })
@@ -590,6 +594,7 @@ class DISCQuestions extends Component {
                 break;
             case 17:
                 iWeight = 100;
+                break;
             default:
                 iWeight = 97;
                 break;
@@ -703,10 +708,42 @@ class DISCQuestions extends Component {
             }
         ]
 
+        // max and second max variables declaration
+        firstMax = 0;
+        scndMax = 0;
+        let mostMax = "";
+        let mostScndMax = "";
+
+        // Determine the max value and the second max value
+        mostData.map((obj, index) => {
+            // if this is the first value
+            if(index === 0){
+                firstMax = obj.amount;
+                mostMax = obj.name
+            }else{
+                // object.amount should become the new max and 
+                // current max should become the second max 
+                if(obj.amount > firstMax && obj.amount > scndMax){
+                    var tempValue = firstMax;
+                    var tempName = mostMax;
+                    firstMax = obj.amount;
+                    mostMax = obj.name;
+                    scndMax = tempValue;
+                    mostScndMax = tempName;
+                }
+                // object.amount should become the second max
+                else if(obj.amount > scndMax && obj.amount <= firstMax){
+                    scndMax = obj.amount;
+                    mostScndMax = obj.name
+                }
+            }
+        })
+
         const res = {
             mostData: mostData,
             leastData: leastData,
-            result: max+scnd
+            leastResult: leastMax+leastScndMax,
+            mostResult: mostMax+mostScndMax
         }
         console.log(res);
         localStorage.setItem('questions', JSON.stringify(res));
@@ -714,13 +751,151 @@ class DISCQuestions extends Component {
         // const queryString = window.loacation.search;
         // if(queryString !== null){
         //     const URLParams = new URLSearchParams(queryString);
-        //     const token = URLParams.get('');
+        //     const token = URLParams.get('learn_token');
         // }
-        
-        this.props.onSubmit(res);
+
+        let mostID = "";
+        let leastID ="";
+
+        switch(res.mostResult){
+            case "DI":
+                mostID="5434";
+                break;
+            case "DS":
+                mostID="5435";
+                break;
+            case "DC":
+                mostID="5436";
+                break;
+            case "IS":
+                mostID="5437";
+                break;
+            case "IC":
+                mostID="5438";
+                break;
+            case "ID":
+                mostID="5446";
+                break;
+            case "SC":
+                mostID="5439";
+                break;
+            case "SD":
+                mostID="5447";
+                break;
+            case "SI":
+                mostID="5448";
+                break;
+            case "CD":
+                mostID="5449";
+                break;
+            case "CI":
+                mostID="5450";
+                break;
+            case "CS":
+                mostID="5451";
+                break;
+            default:
+                mostID="-1"
+                break;
+        }
+
+        switch(res.leastResult){
+            case "DI":
+                leastID="5440";
+                break;
+            case "DS":
+                leastID="5441";
+                break;
+            case "DC":
+                leastID="5442";
+                break;
+            case "ID":
+                leastID="5452";
+                break;
+            case "IS":
+                leastID="5454";
+                break;
+            case "IC":
+                leastID="5444";
+                break;
+            case "SD":
+                leastID="5453";
+                break;
+            case "SI":
+                leastID="5454";
+                break;
+            case "SC":
+                leastID="5445";
+                break;
+            case "CD":
+                leastID="5455";
+                break;
+            case "CI":
+                leastID="5456";
+                break;
+            case "CS":
+                leastID="5457";
+                break;
+            default:
+                leastID="-1"
+                break;
+        }
+
+        const data1 = {
+            "result": {
+            "correct": 2,
+            "total": 2,
+            "assessment_id": 227,
+            "count_as_attempt": true,
+            "complete": true
+            }
+        }
+
+        const config ={
+            headers:{'X-Access-Token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAwNTUwMCwiZW1haWwiOiJtYXJrQHdpeGVscy5jb20iLCJuYW1lIjoiTWFyayBTaXZld3JpZ2h0IiwiZW1wbG95ZWVfbnVtYmVyIjoiZWR1Y29fMDEiLCJhcHBfcm9sZSI6NCwib3JnYW5pc2F0aW9uIjoyOCwiY291bnRyeSI6eyJpZCI6MTAsInR5cGUiOiJjb3VudHJ5Iiwib3B0aW9uIjpudWxsLCJkZXNjcmlwdGlvbiI6IlNvdXRoIEFmcmljYSIsIm9yZ2FuaXNhdGlvbl9pZCI6MCwiY3JlYXRlZF9hdCI6IjIwMTgtMDctMTNUMDg6NDM6NDYuMDAwWiIsInVwZGF0ZWRfYXQiOiIyMDE4LTA3LTEzVDA4OjQzOjQ2LjAwMFoifSwibGFuZ3VhZ2UiOiIiLCJncm91cHMiOltdLCJpYXQiOjE2MDIxNTIzNDYsImV4cCI6MTYwMjIzODc0Nn0.y_zK6rzSPsqpcJw-PgFCgHaM6u6hUnkxp44M_zWOe1Q'}
+        }
+
+        // axios.post('https://learnapi.wixels.com/results/assessment', data1, config)
+        // .then(res => {
+        //     console.log(res);
+        //     const id = res.data.id;
+        //     const data2 = {
+        //         "detail": [
+        //             {
+        //             "question_id" : 1599,
+        //             "answer_id" : mostID,
+        //             "is_correct": true,
+        //             "explanation": "",
+        //             "assessment_result_id": id
+        //             },
+        //             {
+        //             "question_id" : 1600,
+        //             "answer_id" : leastID,
+        //             "is_correct": true,
+        //             "explanation": "",
+        //             "assessment_result_id": id
+        //             }
+        //         ]
+        //     };
+        //     axios.post('https://learnapi.wixels.com/results/assessment/227/detail', data2, config)
+        //     .then(response => {
+        //         console.log(response);
+        //         this.props.onSubmit(res);
+        //         this.props.history.push('/result');
+        //     }).catch(error => {
+        //         this.setState({
+        //             ...this.state,
+        //             error:true
+        //         })
+        //     })
+        // }).catch(error => {
+        //     this.setState({
+        //         ...this.state,
+        //         error:true
+        //     })
+        // })
     }
     
-
     render() {
         const Questions = Object.keys(this.props.answers).map((qKey, index) => {
             return <Q 
@@ -766,10 +941,26 @@ class DISCQuestions extends Component {
                         <Button onClick={() => this.handleDialog(false)} color="primary">
                             Cancel
                         </Button>
-                        <NavLink to="/result" onClick={this.onSubmit()} style={{textDecoration:"none"}}><Button  color="primary" autoFocus>
+                        <Button onClick={this.onSubmit}  color="primary" autoFocus>
                             Continue
-                        </Button></NavLink>
+                        </Button>
                         </DialogActions>
+                </Dialog>
+                <Dialog 
+                    open={this.state.error} 
+                    onClose={() => this.handleErrorDialog(false)}
+                    aria-labelledby="alert-error-dialog-title"
+                    aria-describedby="alert-error-dialog-description">
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Something went wrong...
+                            </DialogContentText>
+                            <DialogActions>
+                            <Button onClick={() => this.handleErrorDialog(false)} color="primary">
+                                Close
+                            </Button>
+                            </DialogActions>
+                        </DialogContent>
                 </Dialog>
             </React.Fragment>
         )

@@ -78,14 +78,14 @@ const Questions = (props) => {
             })
         }
         else if(question.mostValue === 0){
-            console.log("No most value");
+            
             setError({
                 error:true,
                 errText: "Please select one most characteristic"
             })
         }
         else if(question.leastValue === 0){
-            console.log("No least value");
+            
             setError({
                 error:true,
                 errText: "Please select one least characteristic"

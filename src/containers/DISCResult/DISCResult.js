@@ -11,7 +11,6 @@ class DISCResult extends Component {
     }
     
     render(){
-        {console.log(this.props.result)}
         return(
             <Paper className={classes.outerContainer} style={{backgroundColor:"#eeeeee"}}>
                 <h1 className={classes.header}>Your results:</h1>
@@ -25,7 +24,7 @@ class DISCResult extends Component {
                             <Typography variant="h5">
                                 You scored the highest in:
                             </Typography>
-                            <h1 className={classes.scoreResult}>{this.state.answers.result}</h1>
+                            <h1 className={classes.scoreResult}>{this.state.answers.leastResult}</h1>
                         </Paper>
                     </div>
                 </div>
