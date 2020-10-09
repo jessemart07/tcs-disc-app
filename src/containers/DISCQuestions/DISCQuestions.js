@@ -850,7 +850,7 @@ class DISCQuestions extends Component {
         }
 
         const queryString = this.props.location.search;
-        const token = "";
+        let token = "";
 
         if(queryString !== null){
             const URLParams = new URLSearchParams(queryString);
