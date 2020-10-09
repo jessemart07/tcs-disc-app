@@ -863,7 +863,7 @@ class DISCQuestions extends Component {
 
         axios.post('https://learnapi.wixels.com/results/assessment', data1, config)
         .then(res => {
-            console.log(res);
+            //console.log(res);
             const id = res.data.data.id;
             const data2 = {
                 "detail": [
@@ -885,7 +885,7 @@ class DISCQuestions extends Component {
             };
             axios.post('https://learnapi.wixels.com/results/assessment/227/detail', data2, config)
             .then(response => {
-                console.log(response);
+                //console.log(response);
                 this.props.onSubmit(res);
                 this.props.history.push('/result');
             }).catch(error => {
