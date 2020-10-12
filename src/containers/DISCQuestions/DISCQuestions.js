@@ -747,159 +747,158 @@ class DISCQuestions extends Component {
         }
 
         localStorage.setItem('questions', JSON.stringify(res));
-        
-        
+        this.props.history.push('/result');
 
-        let mostID = "";
-        let leastID ="";
+        // let mostID = "";
+        // let leastID ="";
 
-        // get most data for the database
-        switch(res.mostResult){
-            case "DI":
-                mostID="5434";
-                break;
-            case "DS":
-                mostID="5435";
-                break;
-            case "DC":
-                mostID="5436";
-                break;
-            case "IS":
-                mostID="5437";
-                break;
-            case "IC":
-                mostID="5438";
-                break;
-            case "ID":
-                mostID="5446";
-                break;
-            case "SC":
-                mostID="5439";
-                break;
-            case "SD":
-                mostID="5447";
-                break;
-            case "SI":
-                mostID="5448";
-                break;
-            case "CD":
-                mostID="5449";
-                break;
-            case "CI":
-                mostID="5450";
-                break;
-            case "CS":
-                mostID="5451";
-                break;
-            default:
-                mostID="-1"
-                break;
-        }
+        // // get most data for the database
+        // switch(res.mostResult){
+        //     case "DI":
+        //         mostID="5434";
+        //         break;
+        //     case "DS":
+        //         mostID="5435";
+        //         break;
+        //     case "DC":
+        //         mostID="5436";
+        //         break;
+        //     case "IS":
+        //         mostID="5437";
+        //         break;
+        //     case "IC":
+        //         mostID="5438";
+        //         break;
+        //     case "ID":
+        //         mostID="5446";
+        //         break;
+        //     case "SC":
+        //         mostID="5439";
+        //         break;
+        //     case "SD":
+        //         mostID="5447";
+        //         break;
+        //     case "SI":
+        //         mostID="5448";
+        //         break;
+        //     case "CD":
+        //         mostID="5449";
+        //         break;
+        //     case "CI":
+        //         mostID="5450";
+        //         break;
+        //     case "CS":
+        //         mostID="5451";
+        //         break;
+        //     default:
+        //         mostID="-1"
+        //         break;
+        // }
 
-        // get least ID for the database
-        switch(res.leastResult){
-            case "DI":
-                leastID="5440";
-                break;
-            case "DS":
-                leastID="5441";
-                break;
-            case "DC":
-                leastID="5442";
-                break;
-            case "ID":
-                leastID="5452";
-                break;
-            case "IS":
-                leastID="5454";
-                break;
-            case "IC":
-                leastID="5444";
-                break;
-            case "SD":
-                leastID="5453";
-                break;
-            case "SI":
-                leastID="5454";
-                break;
-            case "SC":
-                leastID="5445";
-                break;
-            case "CD":
-                leastID="5455";
-                break;
-            case "CI":
-                leastID="5456";
-                break;
-            case "CS":
-                leastID="5457";
-                break;
-            default:
-                leastID="-1"
-                break;
-        }
+        // // get least ID for the database
+        // switch(res.leastResult){
+        //     case "DI":
+        //         leastID="5440";
+        //         break;
+        //     case "DS":
+        //         leastID="5441";
+        //         break;
+        //     case "DC":
+        //         leastID="5442";
+        //         break;
+        //     case "ID":
+        //         leastID="5452";
+        //         break;
+        //     case "IS":
+        //         leastID="5454";
+        //         break;
+        //     case "IC":
+        //         leastID="5444";
+        //         break;
+        //     case "SD":
+        //         leastID="5453";
+        //         break;
+        //     case "SI":
+        //         leastID="5454";
+        //         break;
+        //     case "SC":
+        //         leastID="5445";
+        //         break;
+        //     case "CD":
+        //         leastID="5455";
+        //         break;
+        //     case "CI":
+        //         leastID="5456";
+        //         break;
+        //     case "CS":
+        //         leastID="5457";
+        //         break;
+        //     default:
+        //         leastID="-1"
+        //         break;
+        // }
 
-        const data1 = {
-            "result": {
-            "correct": 2,
-            "total": 2,
-            "assessment_id": 227,
-            "count_as_attempt": true,
-            "complete": true
-            }
-        }
+        // const data1 = {
+        //     "result": {
+        //     "correct": 2,
+        //     "total": 2,
+        //     "assessment_id": 227,
+        //     "count_as_attempt": true,
+        //     "complete": true
+        //     }
+        // }
 
-        const queryString = this.props.location.search;
-        let token = "";
+        // const queryString = this.props.location.search;
+        // let token = "";
 
-        if(queryString !== null){
-            const URLParams = new URLSearchParams(queryString);
-            token = URLParams.get('learn_token');
-        }
+        // if(queryString !== null){
+        //     const URLParams = new URLSearchParams(queryString);
+        //     token = URLParams.get('learn_token');
+        // }
 
-        const config ={
-            headers:{'X-Access-Token':token}
-        }
+        // const config ={
+        //     headers:{'X-Access-Token':token}
+        // }
 
-        axios.post('https://learnapi.wixels.com/results/assessment', data1, config)
-        .then(res => {
-            //console.log(res);
-            const id = res.data.data.id;
-            const data2 = {
-                "detail": [
-                    {
-                    "question_id" : 1599,
-                    "answer_id" : mostID,
-                    "is_correct": true,
-                    "explanation": "",
-                    "assessment_result_id": id
-                    },
-                    {
-                    "question_id" : 1600,
-                    "answer_id" : leastID,
-                    "is_correct": true,
-                    "explanation": "",
-                    "assessment_result_id": id
-                    }
-                ]
-            };
-            axios.post('https://learnapi.wixels.com/results/assessment/227/detail', data2, config)
-            .then(response => {
-                //console.log(response);
-                this.props.onSubmit(res);
-                this.props.history.push('/result');
-            }).catch(error => {
-                this.setState({
-                    ...this.state,
-                    error:true
-                })
-            })
-        }).catch(error => {
-            this.setState({
-                ...this.state,
-                error:true
-            })
-        })
+        // axios.post('https://learnapi.wixels.com/results/assessment', data1, config)
+        // .then(res => {
+        //     //console.log(res);
+        //     const id = res.data.data.id;
+        //     const data2 = {
+        //         "detail": [
+        //             {
+        //             "question_id" : 1599,
+        //             "answer_id" : mostID,
+        //             "is_correct": true,
+        //             "explanation": "",
+        //             "assessment_result_id": id
+        //             },
+        //             {
+        //             "question_id" : 1600,
+        //             "answer_id" : leastID,
+        //             "is_correct": true,
+        //             "explanation": "",
+        //             "assessment_result_id": id
+        //             }
+        //         ]
+        //     };
+        //     axios.post('https://learnapi.wixels.com/results/assessment/227/detail', data2, config)
+        //     .then(response => {
+        //         //console.log(response);
+        //         this.props.onSubmit(res);
+        //         this.props.history.push('/result');
+        //     }).catch(error => {
+        //         this.setState({
+        //             ...this.state,
+        //             error:true
+        //         })
+        //     })
+        // }).catch(error => {
+        //     this.setState({
+        //         ...this.state,
+        //         error:true
+        //     })
+        // })
     }
 
     render() {
